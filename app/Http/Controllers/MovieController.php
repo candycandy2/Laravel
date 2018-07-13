@@ -7,7 +7,7 @@ use App\lib\ResultCode;
 use App\Services\CompanyService;
 
 
-class MovieController extends Controller
+class MovieController extends Controller //add
 {
 	public function showMovie($id)
 	{

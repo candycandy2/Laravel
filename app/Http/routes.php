@@ -15,9 +15,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//Route 路由
+//Route 路由 add1
 Route::get('movie', function () {
     return '電影列表!1';
 });
-//Add controller  App\Http\Controllers
+//Add controller  App\Http\Controllers add2
 Route::get('movie/{id}', 'MovieController@showMovie');
