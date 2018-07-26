@@ -10,6 +10,7 @@
         </style>
     </head>
     <body>
+
         <div class="container">
             <div class="content">
                 <div class="title">hello candy's world~</div>
@@ -19,19 +20,18 @@
         </div>
 
 
-        <form method="post" enctype="multipart/form-data" >
-             {{ csrf_field() }}
-            <input type="file" name="test">
-            <button type="submit"> 提交 </button>
+
+         <form action="./testgetform" method="post">
+        　<input type="text" name="name" >
+        　<input type="submit" name="Send" value="送出表單">
         </form>
 
-        <form method="post" enctype="multipart/form-data" action="">
-             {{ csrf_field() }}
-            <input type="file" name="test"  accept=".csv,.xls,.xlsx">
-            <button type="submit"> 提交test </button>
-        </form>
-
-
+        <?php
+            echo ("got file");
+            if ($_POST) {
+                echo "姓名" . $_POST["name"];
+            }
+?>
 
     </body>
 </html>

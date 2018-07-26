@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Input;
 use Maatwebsite\Excel\Facades\Excel;
 use Storage;
 
+
 //candy 20180724
 
 class MovieController extends Controller//add
@@ -27,7 +28,24 @@ class MovieController extends Controller//add
     }
 
     public function import() {
-        $filePath = 'excel.xlsx';
+
+        $filePath = 'excel.xlsx';  // method1
+        //'storage/exports/'.iconv('UTF-8', 'GBK', '学生成绩').'.xls';
+        Excel::load($filePath, function ($reader) {
+            //method1
+            // $reader->dump();
+            //method2
+            //$data = $reader->all();
+            //dd($data);
+            //method3
+            $data = $reader->toArray();
+            dd($data);
+        });
+    }
+
+    public function import2($path) {
+        $filePath = $path;
+       // $filePath = 'excel.xlsx';  // method1
         //'storage/exports/'.iconv('UTF-8', 'GBK', '学生成绩').'.xls';
         Excel::load($filePath, function ($reader) {
             //method1
@@ -70,14 +88,14 @@ return view("helloworld");
     public function upload(Request $request) {
 
         if ($request->isMethod('post')) {
-            $file = $request->file('picture');
+            $file = $request->file('test');
 
-            if (Input::hasFile('picture') != true) {
+            if (Input::hasFile('test') != true) {
                 //Flash::error('Banner not provided');
-                alert('上传失败，请重试！');
+                //alert('上传失败，请重试！');
                 return view('welcome');
 
-            } else if (Input::hasFile('picture') == true) {
+            } else if (Input::hasFile('test') == true) {
                 // 文件是否上传成功
                 if ($file->isValid()) {
                     echo ("got file");
@@ -85,7 +103,7 @@ return view("helloworld");
                     $originalName = $file->getClientOriginalName(); // 文件原名
                     echo ($originalName);
 
-                    $ext = $file->getClientOriginalExtension(); // 扩展名
+                    $ext = $file->getClientOriginalExtension(); // 扩展名 副檔名
                     $realPath = $file->getRealPath(); //临时文件的绝对路径
                     echo ($realPath);
                     $type = $file->getClientMimeType(); // image/jpeg
@@ -93,8 +111,12 @@ return view("helloworld");
                     // 上传文件
                     $filename = date('Y-m-d-H-i-s') . '-' . uniqid() . '.' . $ext;
                     // 使用我们新建的uploads本地存储空间（目录）
+                    //Storage::copy('', 'new/file1.jpg');
                     $bool = Storage::disk('uploads')->put($filename, file_get_contents($realPath));
-                    var_dump("這".$bool);
+                    //PHP 使用 file_get_contents 接收 POST 的資料
+                    echo ($realPath.$originalName.$ext );  //
+                   // $this->import2($realPath);
+                   // var_dump("這".$bool);
                 }
             }
         }
@@ -106,8 +128,11 @@ return view("helloworld");
     }
 
     public function showUploadFile(Request $request) {
-        $file = $request->file('image');
+        $file = $request->file('test');
 
+        echo ("1.This".$file);
+        var_dump($file);
+        //D:\INSTALL\tmp\phpC3FF.tmpFile Name: person.xlsx
         //Display File Name
         echo 'File Name: ' . $file->getClientOriginalName();
         echo '<br>';

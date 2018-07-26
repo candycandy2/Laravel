@@ -109,20 +109,34 @@ Route::get('movie', function () {
 });
 
 
+//Route::get('movies', 'MovieController@import');
 Route::get('movies', 'MovieController@import');
 
 Route::any('/user/icon-upload','MovieController@upload');
 //=============================================
+//Method1
 Route::get('/uploadfile1',function () {//原本get顯示
     return view("helloworld");
 });
 //'MovieController@index');//顯示用get
 //Route::post('/uploadfile','MovieController@showUploadFile');//
-Route::post('/uploadfile1','MovieController@upload');//
+
+//Route::post('/uploadfile1','MovieController@upload');//
+Route::post('/uploadfile1','MovieController@showUploadFile');//
 //上傳是用post
 //=============================================
-
+//Method2
 Route::get('/uploadfile','UploadFileController@index');
 Route::post('/uploadfile','UploadFileController@showUploadFile');
 //Route::get('hellohi', 'MovieController@showTab');
 //==================================================
+
+
+Route::get('/testgetform',function () {//原本get顯示
+    return view("testget");
+});
+
+
+Route::any('/testpostform',function () {//原本get顯示
+    return view("testpost");
+});
