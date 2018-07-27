@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -52,15 +51,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-
 //五、Route命名---------------------
 Route::get('user/login', ['as' => 'Routelogin', function () { //命名
     return '用戶登入';
 }]);
 //http://localhost:8080/candyproject1/public/user/login
 Route::get('user/profile', function () {
-    //
     return redirect()->route('Routelogin'); //路由名字
 });
 //http://localhost:8080/candyproject1/public/user/profile =>重導向
@@ -83,7 +79,6 @@ Route::group(['prefix' => 'admin'], function () {
 //--------------------------------------------------------------
 
 // 控制器
-
 //一、在路由里使用控制器
 //Route 路由 add
 Route::get('movie', function () {
@@ -95,7 +90,6 @@ Route::get('movie', function () {
 //--控制器方法 : showMovie
 //--不指名地址
 
-
 Route::get('moviehi', 'MovieController@showMovie');
 //Project ===================
 Route::get('hellohi', function () {
@@ -103,31 +97,30 @@ Route::get('hellohi', function () {
 //    return '電影列表!1';
 });
 
-
 Route::get('movie', function () {
     return '電影列表!1';
 });
-
 
 //Route::get('movies', 'MovieController@import');
 Route::get('movies', 'MovieController@import');
 
 Route::any('/user/icon-upload','MovieController@upload');
 //=============================================
-//Method1
+//[Method1]20180727
 Route::get('/uploadfile1',function () {//原本get顯示
     return view("helloworld");
 });
-//'MovieController@index');//顯示用get
-//Route::post('/uploadfile','MovieController@showUploadFile');//
+//'MovieController@index');
+//Route::post('/uploadfile','MovieController@showUploadFile');
 
-//Route::post('/uploadfile1','MovieController@upload');//
-Route::post('/uploadfile1','MovieController@showUploadFile');//
-//上傳是用post
+Route::post('/uploadfile1','MovieController@upload');//
+//Route::post('/uploadfile1','MovieController@showUploadFile');
+
 //=============================================
 //Method2
 Route::get('/uploadfile','UploadFileController@index');
-Route::post('/uploadfile','UploadFileController@showUploadFile');
+//Route::post('/uploadfile','UploadFileController@showUploadFile');
+Route::post('/uploadfile','UploadFileController@upload');
 //Route::get('hellohi', 'MovieController@showTab');
 //==================================================
 //Sample for route test 20187/27

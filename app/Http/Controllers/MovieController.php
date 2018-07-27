@@ -8,9 +8,7 @@ use Illuminate\Support\Facades\Input;
 use Maatwebsite\Excel\Facades\Excel;
 use Storage;
 
-
 //candy 20180724
-
 class MovieController extends Controller//add
 {
     public function showMovie() {
@@ -29,7 +27,7 @@ class MovieController extends Controller//add
 
     public function import() {
 
-        $filePath = 'excel.xlsx';  // method1
+        $filePath = 'excel.xlsx'; // method1
         //'storage/exports/'.iconv('UTF-8', 'GBK', '学生成绩').'.xls';
         Excel::load($filePath, function ($reader) {
             //method1
@@ -45,7 +43,7 @@ class MovieController extends Controller//add
 
     public function import2($path) {
         $filePath = $path;
-       // $filePath = 'excel.xlsx';  // method1
+        // $filePath = 'excel.xlsx';  // method1
         //'storage/exports/'.iconv('UTF-8', 'GBK', '学生成绩').'.xls';
         Excel::load($filePath, function ($reader) {
             //method1
@@ -55,9 +53,55 @@ class MovieController extends Controller//add
             //dd($data);
             //method3
             $data = $reader->toArray();
-            dd($data);
+            //  dd("1import2+"$data);
+
+            $this->originalFile($data); //test 　20180727
         });
     }
+
+    public function originalFile($a) {
+        //  dd($data);
+
+        // $a = array(array(1,2,3),array(4,5,6),array(7,8,9),);
+        //  dd($a);
+
+//[Test 1]
+/*
+        $a = array(
+            "number" => 1.0,
+            "name" => "AA",
+            "score" => 100.0,
+            "test" => 1.0,
+        );
+
+        foreach ($a as $vals) {
+            echo $vals;
+            echo "//77測試<br>";
+        }
+*/
+
+//[Test 2]
+        foreach($a as $another_arr) //從二維陣列取出一維陣列
+        {
+            foreach($another_arr as $value) //從一維陣列取出值
+            {
+                 echo $value;
+            }
+                echo "//77測試<br>";
+        }
+
+        /*
+        foreach ($data as $vals) {
+        echo "A: $vals[0]; B: $vals[1]\n";
+        }
+         */
+
+        //$valuedata = $value;
+        //     echo  $valuedata;
+        // dd($data);//show
+
+    }
+
 /*
 public function iconUpload()
 {
@@ -88,17 +132,17 @@ return view("helloworld");
     public function upload(Request $request) {
 
         if ($request->isMethod('post')) {
-            $file = $request->file('test');
+            $file = $request->file('doc');
 
-            if (Input::hasFile('test') != true) {
+            if (Input::hasFile('doc') != true) {
                 //Flash::error('Banner not provided');
                 //alert('上传失败，请重试！');
                 return view('welcome');
 
-            } else if (Input::hasFile('test') == true) {
+            } else if (Input::hasFile('doc') == true) {
                 // 文件是否上传成功
                 if ($file->isValid()) {
-                    echo ("got file");
+                    echo ("<br>got file<br>");
                     // 获取文件相关信息
                     $originalName = $file->getClientOriginalName(); // 文件原名
                     echo ($originalName);
@@ -114,9 +158,9 @@ return view("helloworld");
                     //Storage::copy('', 'new/file1.jpg');
                     $bool = Storage::disk('uploads')->put($filename, file_get_contents($realPath));
                     //PHP 使用 file_get_contents 接收 POST 的資料
-                    echo ($realPath.$originalName.$ext );  //
-                   // $this->import2($realPath);
-                   // var_dump("這".$bool);
+                    echo ($realPath . $originalName . $ext); //
+                    $this->import2($realPath);
+                    // var_dump("這".$bool);
                 }
             }
         }
@@ -130,7 +174,7 @@ return view("helloworld");
     public function showUploadFile(Request $request) {
         $file = $request->file('test');
 
-        echo ("1.This".$file);
+        echo ("1.This" . $file);
         var_dump($file);
         //D:\INSTALL\tmp\phpC3FF.tmpFile Name: person.xlsx
         //Display File Name
