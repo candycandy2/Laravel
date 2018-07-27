@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html>
     <head>
         <title>Hello~ 2</title>
@@ -10,7 +9,6 @@
         </style>
     </head>
     <body>
-
         <div class="container">
             <div class="content">
                 <div class="title">hello candy's world~</div>
@@ -18,10 +16,7 @@
                     </div>
             </div>
         </div>
-
-
-
-         <form action="./testgetform" method="post">
+        <form action="./testgetform" method="post">
         　<input type="text" name="name" >
         　<input type="submit" name="Send" value="送出表單">
         </form>
@@ -31,7 +26,6 @@
             if ($_POST) {
                 echo "姓名" . $_POST["name"];
             }
-?>
-
+        ?>
     </body>
 </html>

@@ -19,10 +19,26 @@
         </form>
 
         <?php
+            if($_GET){
+                echo $_GET['name'].", ".$_GET['sex'];
+            }
+            if ($_POST) {
+                    echo "姓名" . $_POST["name"];
+            }
+        ?>
+
+         <form method="post" enctype="multipart/form-data"
+               action="{{ action('MovieController@showUploadFile') }}" >
+             {{ csrf_field() }}
+            <input type="file" name="test">
+            <button type="submit"> 提交 </button>
+        </form>
+
+        <?php
         if($_GET){
             echo $_GET['name'].", ".$_GET['sex'];
         }
-         if ($_POST) {
+        if ($_POST) {
                 echo "姓名" . $_POST["name"];
             }
         ?>

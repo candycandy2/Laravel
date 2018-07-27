@@ -17,8 +17,6 @@
                     </div>
             </div>
         </div>
-
-
         <form method="post" enctype="multipart/form-data" >
              {{ csrf_field() }}
             <input type="file" name="test">
@@ -30,8 +28,5 @@
             <input type="file" name="test"  accept=".csv,.xls,.xlsx">
             <button type="submit"> 提交test </button>
         </form>
-
-
-
     </body>
 </html>

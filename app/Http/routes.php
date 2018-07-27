@@ -130,13 +130,11 @@ Route::get('/uploadfile','UploadFileController@index');
 Route::post('/uploadfile','UploadFileController@showUploadFile');
 //Route::get('hellohi', 'MovieController@showTab');
 //==================================================
-
-
-Route::get('/testgetform',function () {//原本get顯示
+//Sample for route test 20187/27
+Route::post('/testgetform',function () {
     return view("testget");
 });
 
-
-Route::any('/testpostform',function () {//原本get顯示
+Route::get('/testpostform',function () {
     return view("testpost");
 });
