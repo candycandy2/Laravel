@@ -110,11 +110,10 @@ Route::any('/user/icon-upload','MovieController@upload');
 Route::get('/uploadfile1',function () {//原本get顯示
     return view("helloworld");
 });
-//'MovieController@index');
-//Route::post('/uploadfile','MovieController@showUploadFile');
 
 Route::post('/uploadfile1','MovieController@upload');//
-//Route::post('/uploadfile1','MovieController@showUploadFile');
+
+Route::get('/curlGetData','MovieController@curlGetData');//
 
 //=============================================
 //Method2

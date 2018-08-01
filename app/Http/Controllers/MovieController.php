@@ -60,37 +60,49 @@ class MovieController extends Controller//add
     }
 
     public function originalFile($a) {
-        //  dd($data);
+        // $a = array(array(1, 2, 3), array(4, 8, 6), array(7, 8, 9));
+        dd($a);
 
-        // $a = array(array(1,2,3),array(4,5,6),array(7,8,9),);
-        //  dd($a);
-
-//[Test 1]
-/*
+        // $this->curlGetData();
+        //[Test 1]
+        /*
         $a = array(
-            "number" => 1.0,
-            "name" => "AA",
-            "score" => 100.0,
-            "test" => 1.0,
+        "number" => 1.0,
+        "name" => "AA",
+        "score" => 100.0,
+        "test" => 1.0,
         );
 
         foreach ($a as $vals) {
-            echo $vals;
-            echo "//77測試<br>";
+        echo $vals;
+        echo "//77測試<br>";
         }
-*/
+         */
 
 //[Test 2]
-        foreach($a as $another_arr) //從二維陣列取出一維陣列
-        {
-            foreach($another_arr as $value) //從一維陣列取出值
-            {
-                 echo $value;
-            }
-                echo "//77測試<br>";
+      
+        foreach ($a as $another_arr) //從二維陣列取出一維陣列
+        {   //echo "<br>2 dime ".$another_arr;
+        foreach ($another_arr as $value) //從一維陣列取出值
+        {echo "<br>";
+             echo $value;
+        //echo $value['name'];
         }
+        echo "<br>";
+        }
+       
+//[Test 3 要換excel檔]
+/*
+        foreach ($a as $k => $val) {
+           // echo"NAME:";
+           echo $val['name']."<br>";
+           // echo"-----";
 
+           //  echo"-----";
+        }
+*/
         /*
+
         foreach ($data as $vals) {
         echo "A: $vals[0]; B: $vals[1]\n";
         }
@@ -129,6 +141,61 @@ return view("helloworld");
 }
  */
 
+    public function curlGetData() {
+
+        $this->Datainsert();
+
+        echo "testcurl==============";
+        //        [CURL]
+        /*
+        $ch = curl_init("https://tw.yahoo.com/");
+
+        $ch = curl_init("https://laravel.com/docs/5.2/responses");
+
+        // print_r(curl_getinfo($ch));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_exec($ch); //跑不動? 20180730
+
+        curl_close($ch);
+        //phpinfo();
+         */
+
+        /*
+        $file = fopen("out.html", 'w'); //開啟檔案
+        fwrite($file, $output); //寫入檔案
+        fclose($file);
+         */
+/*
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL,"http://www.lorempixel.com/");
+curl_setopt($ch, CURLOPT_HEADER, 0);
+$output = curl_exec($ch);
+
+curl_close($ch);
+
+echo $output; //輸出傳回值
+echo "testcurl==============";
+ */
+        $url = "http://www.lorempixel.com/";
+        $curlPing = curl_init($url);
+        curl_setopt($curlPing, CURLOPT_TIMEOUT, 0);
+        curl_setopt($curlPing, CURLOPT_CONNECTTIMEOUT, 0);
+        curl_setopt($curlPing, CURLOPT_RETURNTRANSFER, true);
+
+        $data = curl_exec($curlPing);
+     //   \Debugbar::info(curl_getinfo($curlPing));
+        print_r(curl_getinfo($curlPing));
+        $httpCode = curl_getinfo($curlPing, CURLINFO_HTTP_CODE);
+        echo $httpCode;
+        echo "testcurl==============";
+
+        if (curl_errno($curlPing)) {
+            echo 'Curl error: ' . curl_error($curlPing);
+        }
+        curl_close($curlPing);
+        return view("helloworld");
+    }
+
     public function upload(Request $request) {
 
         if ($request->isMethod('post')) {
@@ -155,11 +222,14 @@ return view("helloworld");
                     // 上传文件
                     $filename = date('Y-m-d-H-i-s') . '-' . uniqid() . '.' . $ext;
                     // 使用我们新建的uploads本地存储空间（目录）
-                    //Storage::copy('', 'new/file1.jpg');
                     $bool = Storage::disk('uploads')->put($filename, file_get_contents($realPath));
+                    // echo ("<br>20180731<br>".file_get_contents($realPath) );
+                    //亂碼
                     //PHP 使用 file_get_contents 接收 POST 的資料
                     echo ($realPath . $originalName . $ext); //
-                    $this->import2($realPath);
+
+                    $this->import2($realPath); //open 20180730
+                    // $this->originalFile($data);
                     // var_dump("這".$bool);
                 }
             }
@@ -200,6 +270,12 @@ return view("helloworld");
         $destinationPath = 'uploads';
         $file->move($destinationPath, $file->getClientOriginalName());
         return view("helloworld");
+    }
+
+    public function Datainsert() {
+        \DB::table('movie')->insert(
+            ['title' => 'Ironman', 'value' => 2, 'price' => 5000]
+        );
     }
 
 }
